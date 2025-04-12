@@ -15,34 +15,46 @@
     <script>
       const postsContainer = document.getElementById("posts");
 
-      // Lista de arquivos de post (poderia ser gerada via JSON futuramente)
-      const postFiles = ["../posts/post-1.md"];
+      // Carrega a lista de arquivos do JSON
+      fetch("../posts.json")
+        .then((res) => res.json())
+        .then((postFiles) => {
+          postFiles.forEach((file) => {
+            fetch(`../posts/${file}`)
+              .then((res) => res.text())
+              .then((md) => {
+                const lines = md.split("\n");
+                const titleLine = lines.find((l) => l.startsWith("#"));
+                const dateLine = lines.find((l) =>
+                  /^\d{4}-\d{2}-\d{2}/.test(l)
+                );
+                const title = titleLine
+                  ? titleLine.replace("#", "").trim()
+                  : "Sem título";
+                const rawDate = dateLine ? dateLine.trim() : "";
+                const date = rawDate
+                  ? new Date(rawDate).toLocaleDateString("pt-BR", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })
+                  : "Data não encontrada";
 
-      postFiles.forEach((file) => {
-        fetch(file)
-          .then((res) => res.text())
-          .then((md) => {
-            const lines = md.split("\n");
-            const titleLine = lines.find((l) => l.startsWith("#"));
-            const dateLine = lines.find((l) => /^\d{4}-\d{2}-\d{2}/.test(l));
-            const title = titleLine
-              ? titleLine.replace("#", "").trim()
-              : "Sem título";
-            const date = dateLine || "Data não encontrada";
+                const slug = file.replace(".md", "");
 
-            const slug = file.split("/").pop().replace(".md", "");
-            const postElement = document.createElement("div");
-            postElement.className = "bg-white p-6 rounded shadow";
-            postElement.innerHTML = `
-        <a href="post.html?slug=${slug}" class="block hover:opacity-80 transition">
-          <h2 class="text-xl font-semibold mb-1">${title}</h2>
-          <p class="text-gray-500 text-sm mb-2">${date}</p>
-          <p class="text-gray-600 text-sm">Clique para ler mais</p>
-        </a>
-      `;
-            postsContainer.appendChild(postElement);
+                const postElement = document.createElement("div");
+                postElement.className = "bg-white p-6 rounded shadow";
+                postElement.innerHTML = `
+            <a href="post.html?slug=${slug}" class="block hover:opacity-80 transition">
+              <h2 class="text-xl font-semibold mb-1">${title}</h2>
+              <p class="text-gray-500 text-sm mb-2">${date}</p>
+              <p class="text-gray-600 text-sm">Clique para ler mais</p>
+            </a>
+          `;
+                postsContainer.appendChild(postElement);
+              });
           });
-      });
+        });
     </script>
   </body>
 </html>
