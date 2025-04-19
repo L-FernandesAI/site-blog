@@ -17,31 +17,25 @@
     </style>
   </head>
   <body class="bg-white text-gray-800">
-    <!-- SEÇÃO COMPLETA COM VÍDEO DE FUNDO INCLUINDO O HEADER -->
+    <!-- SEÇÃO COMPLETA COM IMAGEM DE FUNDO INCLUINDO O HEADER -->
     <section class="relative h-screen w-full overflow-hidden">
-      <!-- VÍDEO DE FUNDO -->
-      <video
-        autoplay
-        muted
-        loop
-        playsinline
+      <!-- IMAGEM DE FUNDO -->
+      <img
+        src="img/gh.jpg"
+        alt="Imagem de fundo"
         class="absolute top-0 left-0 w-full h-full object-cover z-0"
-      >
-        <source src="img/vid.mp4" type="video/mp4" />
-        Seu navegador não suporta vídeo em background.
-      </video>
+      />
 
       <!-- SOBREPOSIÇÃO ESCURA PARA LEGIBILIDADE -->
       <div class="absolute inset-0 bg-black bg-opacity-50 z-10"></div>
 
-      <!-- HEADER DENTRO DA SEÇÃO COM TEXTO BRANCO -->
       <div class="absolute top-0 left-0 w-full z-20">
         <div class="flex justify-center py-6">
-          <h1
-            class="text-white text-2xl font-[Playfair] tracking-widest uppercase"
-          >
-            Joceane Advocacia
-          </h1>
+          <img
+            src="img/01.png"
+            alt="Joceane Advocacia"
+            class="h-24 md:h-28 object-contain"
+          />
         </div>
       </div>
 
